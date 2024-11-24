@@ -1,0 +1,23 @@
+Alspec
+ASP.NET Core Job Management API This API provides data for job management, including job details and associated sub-items. It uses the Data Repository pattern and Entity Framework for API design.
+
+Prerequisites Ensure you have the following installed on your machine:
+
+.NET SDK (Last version)
+Visual Studio
+A SQL Server instance (local or cloud-hosted) for database integration
+Steps to Set Up and Run
+
+Clone the Repository
+
+Open the Project • Open the .sln file in Visual Studio.
+
+Configure the Database
+
+Open the appsettings.json file and update the ConnectionStrings section with your database connection string:
+
+Run the following commands in the Package Manager Console to apply migrations and update the database: Update database
+
+Run the API Project The API will start and be accessible at: https://localhost:44319/swagger/index.html
+
+Test the API Use Browser to test the API endpoints: • GET /api/jobs: Fetch a list of jobs with sub-items. • POST /api/jobs: Add a new job. • DELETE /api/jobs: Delete a job with specified Id. • PUT /api/jobs: Update a job with specified Id.
