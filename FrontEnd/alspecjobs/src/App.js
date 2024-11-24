@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchJobs } from "../src/Jobs/api.js";
 import { DataGrid } from "@mui/x-data-grid";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 const JobList = () => {
   const [jobs, setJobs] = useState([]); // Store jobs fetched from the API
   const [loading, setLoading] = useState(true); // Track loading state
@@ -34,7 +37,20 @@ const JobList = () => {
       {/* <div style={{ height: 400, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} />
       </div> */}
-      <h1>Job Management</h1>
+      <div style={{ textAlign: "center" }}>
+        <h1>Alspec Products</h1>
+
+        <div>
+          <Container>
+            <Row>
+              <Col style={{ border: "1px solid #000" }}>Job Id</Col>
+              <Col style={{ border: "1px solid #000" }}>Job Title</Col>
+              <Col style={{ border: "1px solid #000" }}>Job Description</Col>
+            </Row>
+          </Container>
+        </div>
+      </div>
+
       {jobs.length === 0 ? (
         <p>No jobs available.</p> // Handle empty data gracefully
       ) : (
@@ -43,59 +59,42 @@ const JobList = () => {
     </div>
   );
 };
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  { field: "title", headerName: "Title", width: 150 },
-  { field: "description", headerName: "Description", width: 110 },
-  { field: "status", headerName: "Status", width: 110 },
-];
-
+const columns = [];
 const rows = [];
 
-<div></div>;
 const JobItem = ({ job }) => (
-  <div style={{ border: "1px solid #ccc", padding: "10px", margin: "10px 0" }}>
-    <div className='row'>
-      <div className='col'>Job Id</div>
-      <h2>{job.id}</h2>
-      <div className='col'>
-        Job Title
-        <h2>{job.title}</h2>
-      </div>
-      <div className='col'>
-        Job Description
-        <p>{job.description}</p>
-      </div>
-    </div>
-    <div>
-      {job.subItems.map((sub) => (
-        <div key={sub.itemId} style={{ color: getStatusColor(sub.status) }}>
-          <strong>{sub.title}:</strong> {sub.description} ({sub.status})
-        </div>
-      ))}
-    </div>
-    <ul>
-      {job.subItems.map(
-        (sub) =>
-          rows.push({
-            id: sub.itemId,
-            name: sub.title,
-            description: sub.description,
-            status: sub.status,
-          })
-        // ,
-        // (
-        //   <li key={sub.itemId} style={{ color: getStatusColor(sub.status) }}>
-        //     <strong>{sub.title}:</strong> {sub.description} ({sub.status})
-        //   </li>
-        // )
-      )}
-    </ul>
-    <div style={{ height: 200, width: "100%" }}>
-      <DataGrid rows={rows} columns={columns} />
-    </div>
-    ;
-  </div>
+  // <div style={{ border: "1px solid #ccc", padding: "10px", margin: "10px 0" }}>
+
+  <Container>
+    <Row>
+      <Col style={{ border: "1px solid #000" }}>{job.id}</Col>
+      <Col style={{ border: "1px solid #000" }}>{job.title}</Col>
+      <Col style={{ border: "1px solid #000" }}>{job.description}</Col>
+    </Row>
+    {/* </div> */}
+    <Row style={{ border: "1px solid #000" }}>
+      <Col sm></Col>
+      <Col sm={8}>
+        {job.subItems.map((sub) => (
+          <Row
+            style={{
+              border: "1px solid #000",
+              backgroundColor: getStatusColor(sub.status),
+            }}
+          >
+            {" "}
+            <Row>Item Id: {sub.itemId}</Row>
+            <Row>Title: {sub.title}</Row>
+            <Row>Description: {sub.description}</Row>
+            <Row>Status: {sub.status}</Row>
+            {/* <div key={sub.itemId} style={{ color: getStatusColor(sub.status) }}>
+              <strong>{sub.title}:</strong> {sub.description} ({sub.status})
+            </div> */}
+          </Row>
+        ))}
+      </Col>
+    </Row>
+  </Container>
 );
 
 const getStatusColor = (status) => {
@@ -103,11 +102,11 @@ const getStatusColor = (status) => {
     case "Pending":
       return "orange";
     case "In Progress":
-      return "blue";
+      return "yellow";
     case "Completed":
       return "green";
     default:
-      return "black";
+      return "white";
   }
 };
 
